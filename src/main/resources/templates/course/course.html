@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+	<!-- I got the idea for how to do this from https://www.thymeleaf.org/doc/articles/springsecurity.html -->
+	<div sec:authorize="isAuthenticated()">
+		<h4 th:inline="text">BannerID:
+			[[${#httpServletRequest.remoteUser}]]</h4>
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" />
+		</form>
+	</div>
+	<h1 th:text="'Course: ' + ${course.title}">Course: Title Not Found</h1>
+	<div th:if="${instructor} or ${ta}">
+		<br /> <a th:href="@{/course/instructoradmin(id=${course.id})}">Course
+			Administration</a><br/>
+			<a th:href="@{/course/makegroups(id=${course.id})}">Make Groups</a>
+			</a>
+		<div class="Button">
+			<br /> <a th:href="@{/surveyhome(id=${course.id},userID=${userID})}">Create Survey</a>
+		</div>
+	</div>
+
+	<div th:if="${instructor}">
+		<div class="Button">
+			<br /> <a th:href="@{/questionmanager(userID=${userID})}">Go to
+			Question Manager Page</a>
+		</div>
+	</div>
+	<div th:if="${student}">
+		<div th:if="${enrolled}">
+			<div th:if="${published}">
+				<br /> <a th:href="@{/surveyresponse/surveyresponse(surveyID=${surveyID},userID=${userID})}"> Survey available: Click here to fill the survey</a>
+			</div>
+			<div th:if="${not published}">
+				<br /> <p> Survey is not available or not published</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

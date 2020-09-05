@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/styles/cssandjs/main.css">
+<title>Question Manager Page</title>
+
+
+<style>
+.Button {
+	text-align: center;
+	padding: 20px;
+	margin-top: 10px;
+	width: 100%;
+}
+
+Button {
+	padding: 14px;
+	border: 1px solid black;
+	font-family: cursive;
+	background: #8cffe0;
+	color: black;
+	font-size: medium;
+}
+
+h1 {
+	font-size: 30px;
+	font-family: cursive;
+	color: #FAFAFA;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+
+	<header class="bodyGridRow headerGridContainer">
+		<h1>Question Manager Page</h1>
+	</header>
+
+
+	<div class="Button">
+		<br /> <a th:href="@{/listquestions(userID=${userID})}"><button type="submit">List
+				Questions</button></a>
+	</div>
+	<div class="Button">
+		<br /> <a th:href="@{/deletequestionspage(userID=${userID})}"><button
+				type="submit">Delete Questions</button></a>
+	</div>
+	<div class="Button">
+		<br /> <a th:href="@{/welcomequestions(userID=${userID})}"><button
+				type="submit">Create Questions</button></a>
+	</div>
+
+</body>
+</html>

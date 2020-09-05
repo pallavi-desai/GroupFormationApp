@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css"
+	href="/styles/cssandjs/questionmanager.css">
+
+</head>
+<body>
+	<div class="main">
+		<div class="nav-bar">
+			<ul>
+				<li><a href="">Welcome</a></li>
+				<li><a href="">Question Editor</a></li>
+				<li><a href="">Answer Editor</a></li>
+				<li><a href="" style="background: #888888; color: black">Finish</a></li>
+			</ul>
+		</div>
+		<div class="finish">
+			<h1>You have saved the question.</h1>
+		</div>
+		<div>
+
+			<div class="Button">
+				<br /> <a th:href="@{/questionmanager(userID=${userID})}"><button
+						type="submit">Go to Question Manager</button></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script language="javascript" type="text/javascript">
+    function dynamicdropdown(questions)
+    {
+    	for(var i = 0;i < questions.length; i++) {
+    		switch (questions[i].typeSelect)
+            {
+            case "mcq1":
+            case "mcq2":
+            case "free":
+                document.getElementById("criteria_"+i).options[0]=new Option("Select status","");
+                document.getElementById("criteria_"+i).options[1]=new Option("Group Similar","similar");
+                document.getElementById("criteria_"+i).options[2]=new Option("Group Dissimilar","disimilar");
+                break;
+            case "numeric" :
+                document.getElementById("criteria_"+i).options[0]=new Option("Select status","");
+                document.getElementById("criteria_"+i).options[1]=new Option("Group Similar","similar");
+                document.getElementById("criteria_"+i).options[2]=new Option("Group Dissimilar","disimilar");
+                document.getElementById("criteria_"+i).options[3]=new Option("Greater than X","Grtx");
+                document.getElementById("criteria_"+i).options[4]=new Option("Less than X","Lessx");
+                break;
+            }
+    	}
+        
+    }
+    
+    function enableThreshold(id)
+    {
+    	var e = document.getElementById(id);
+    	var value = e.options[e.selectedIndex].value;
+    	
+    	 if (value==='Lessx' || value==='Grtx'){
+    		  document.getElementById("threshold_"+id.substring(id.indexOf("_")+1, id.length)).disabled = false; 
+    		
+    	}else{
+    		document.getElementById("threshold_"+id.substring(id.indexOf("_")+1, id.length)).disabled = true;
+    	}     
+    }
+    </script>
+</head>
+<body th:onload="dynamicdropdown([[${questions}]])">
+<div>
+			<!-- Display list of courses. -->
+			<h4>Available Questions:</h4>
+			<form th:action="@{/computeformula(id=${courseid})}" method="post">
+			Input group size:<input type="text" id="size" name="size" required><br/>			
+			<table>
+			<tr>
+    			<th>Title</th>
+    			<th>Type</th>
+    			<th>Criteria</th>
+    			<th>Thresold</th>
+  			</tr>
+				<tr th:each="question,iter : ${questions}">
+					<td><input type="text" name="questiontext" th:value="${question.questionText}" readonly size="40"></td>
+					<td><input type="text" name="questiontype" th:value="${question.typeSelect}" readonly size="10"></td>
+						<td> <select th:id="'criteria_'+${iter.index}" name="criteria" onchange=enableThreshold(this.id)>            				
+        				</select>
+        			</td>
+        			<td> <input type="text" th:id="'threshold_'+${iter.index}" name="threshold" disabled/>
+        			</td>
+        			<td><input type="hidden" name="questionid" th:value="${question.questionID}" readonly size="10"></td>
+					<td><input type="hidden" name="optionscount" th:value="${question.responseText}" readonly size="10"></td>
+				</tr>
+			</table>
+			<button type="submit">Make groups</button>
+				</form>
+		</div>
+</body>
+</html>

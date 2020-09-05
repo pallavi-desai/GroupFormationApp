@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Form</title>
+    <style>
+        .bottom-three {
+            margin-bottom: 1cm;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submitSurvey').click(function() {
+            checked = $("input[type=checkbox]:checked").length;
+            if(!checked) {
+                alert("You must check at least one checkbox.");
+                return false;
+            }
+        });
+    });
+
+</script>
+<form th:action="@{/surveyresponse/surveyresponse(surveyID=${surveyID},userID=${userID})}" method="post">
+   <div>
+       <h2>Student Survey for Project Group</h2>
+       <div class="bottom-three" th:each="question,iStat : ${questions}">
+            <div th:if="${question.questionType == 'numeric'}">
+                <label>[[${question.questionText}]]</label>
+                <input th:type="number" th:name="${question.questionID}" required>
+            </div>
+           <div class="bottom-three" th:if="${question.questionType == 'mcq1'}">
+               <label>[[${question.questionText}]]</label>
+               <div th:each="response : ${responses.get(question.questionID)}">
+                   <input th:type="radio" th:name="${question.questionID}" th:value="${response.score_txt}" required>
+                   <label>[[${response.response_txt}]]</label>
+               </div>
+           </div>
+           <div class="bottom-three" th:if="${question.questionType == 'mcq2'}">
+               <label>[[${question.questionText}]]</label>
+               <div th:each="response : ${responses.get(question.questionID)}">
+                   <input th:type="checkbox" th:name="${question.questionID}" th:value="${response.score_txt}">
+                   <label>[[${response.response_txt}]]</label>
+               </div>
+           </div>
+           <div class="bottom-three" th:if="${question.questionType == 'free'}">
+               <label>[[${question.questionText}]]</label>
+               <input th:type="textarea" th:name="${question.questionID}" required>
+           </div>
+       </div>
+       <div>
+           <input type="submit" value="Submit" id="submitSurvey">
+       </div>
+   </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/styles/cssandjs/normalize.css}" rel="stylesheet" />
+    <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>Survey Home</title>
+    <style>
+        .Main{
+            scroll-behavior: auto;
+        }
+        header{
+            text-align: center;
+        }
+        .Label{
+            text-align: center;
+        }
+        h2{
+            font-family: cursive;
+            font-size: large;
+        }
+
+        ul{
+            text-align: left;
+            padding: 0px;
+            text-decoration: none;
+            list-style-type: none;
+        }
+        li{
+            padding: 0px;
+            text-decoration: none;
+            list-style-type: none;
+        }
+        p{
+            text-align: center;
+            font-size:large ;
+            font-family: cursive;
+        }
+        .headings{
+            padding: 0px;
+        }
+        .types{
+            margin-top: 56px;
+            margin-left: 50px;
+        }
+        .addDiv{
+            margin-bottom: 50px;
+            margin-right: 10px;
+            border: 2px solid black;
+            float: left;
+            display: inline-block;
+        }
+        .removeDiv{
+            border: 2px solid red;
+            display: inline-block;
+        }
+        label{
+            margin-right:50px;
+        }
+        .Save{
+            float: left;
+            display: inline-block;
+        }
+        .Publish{
+            display: inline-block;
+
+        }
+        .backButton{
+            margin-top: 30px;
+            padding-top: 10px;
+        }
+        .Button{
+            text-align: center;
+
+        }
+
+    </style>
+</head>
+<body>
+    <header class="bodyGridRow headerGridContainer">
+        <h1>Welcome to Survey Creation</h1>
+    </header>
+<div>
+<!-- Block if survey is published -->
+    <div th:if="${surveyFlag}==false">
+        <p th:text="${surveyMessage}"></p>
+        <a th:href="@{/unpublish(id=${courseID},userID=${userID})}">
+            <button type="submit">Un-Publish Survey</button>
+        </a>
+    </div>
+
+<!-- Main Block-->
+
+    <div  th:if="${surveyFlag}==true" class="Main">
+        <div class="Label">
+            <h2> Please select your questions for the survey.</h2>
+        </div>
+
+<!--        Save and Publish button  -->
+
+        <div class="Buttons">
+            <div class="Save">
+                <form th:action="@{/save(id=${courseID},userID=${userID})}"
+                      method="post">
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+
+            <div th:if="${publish==true}" class="Publish">
+                <form th:action="@{/publish(id=${courseID},userID=${userID})}"
+                      method="post">
+                    <input type="submit" value="Publish">
+                </form>
+            </div>
+        </div>
+<!-- Message block -->
+        <div th:if="${msgFlag==0}">
+            <p th:text="${message}"></p>
+        </div>
+        <div th:if="${msgFlag==1}">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div class="mainAction">
+
+<!--            For displaying all the questions and add them -->
+            <div class="addDiv">
+                <p> Add Questions to the survey </p>
+                <hr>
+                <form th:action="@{/addQuestions(id=${courseID},userID=${userID})}"
+                      method="post">
+                    <div class="radio">
+                        <ul>
+                            <li th:each="i: ${questionsList}" class="headings">
+                                <input type="radio" name="selectedQue" th:value="${i.key}" />
+                                <label th:text="${i.key}" ></label>
+                                <label th:text="${i.value}"></label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="Button">
+                        <button type="submit">Add Question to Survey</button>
+                    </div>
+                </form>
+            </div>
+
+            <!--        For displaying the questions selected and removing them-->
+
+            <div  class="removeDiv">
+                <p> Questions in your current survey </p>
+                <hr>
+                <form th:action="@{/removeQuestions(id=${courseID},userID=${userID})}"
+                      method="post">
+                    <div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li th:each=" selectQue: ${selectedQuestions}" class="headings">
+                                            <input type="radio" name="removeQue" th:value="${selectQue}" />
+                                            <label th:text="${selectQue}"></label>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li th:each=" selectedType: ${selectedType}" class="types">
+                                            <label th:text="${selectedType}"></label>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="Button">
+                        <button type="submit">Remove Question From Survey</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+  <div class="backButton">
+      <a th:href="@{/}">
+          <button>Go to Home Page</button>
+      </a>
+  </div>
+</div>
+
+</body>
+</html>

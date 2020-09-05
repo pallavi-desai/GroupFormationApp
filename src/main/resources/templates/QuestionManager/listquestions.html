@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>List of all questions</title>
+<link th:href="@{/styles/cssandjs/normalize.css}" rel="stylesheet" />
+<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+	<style>
+		.mainBlock{
+			display: flex;
+			padding: 30px;
+		}
+		.twoBlocks{
+			margin: auto;
+			text-align: center;
+		}
+		label{
+			font-family: cursive;
+			font-size: medium;
+			color: black;
+		}
+		button{
+			padding: 14px;
+			border: 1px solid black;
+			font-family: cursive;
+			background: #8cffe0;
+			color: black;
+			font-size: medium;
+			margin: auto;
+		}
+		.insideForm{
+			margin-bottom: 10px;
+		}
+		#table{
+			padding-top: 40px;
+		}
+
+		table th{
+			font-size: 30px;
+			font-family: cursive;
+		}
+
+
+	</style>
+</head>
+<body>
+	<header class="bodyGridRow headerGridContainer">
+		<h1>List of Questions by title</h1>
+	</header>
+	<div  class="mainBlock" >
+
+		<div  class="twoBlocks" >
+			<form th:action="@{/listquestions(userID=${userID})}" method="post"
+				th:object="${sorters}">
+				<div class="insideForm">
+					<label>Sort by:</label> <select th:field="*{sortField}">
+					<option th:each="p : ${sortingFields}" th:value="${p.key}"
+							th:text="${p.value}" />
+				</select> <br />
+				</div>
+
+				<div class="insideForm">
+					<label>Sort Order:</label> <select th:field="*{sortOrder}">
+					<option th:each="p : ${sortingOrders}" th:value="${p.key}"
+							th:text="${p.value}" />
+				</select> <br />
+				</div>
+
+				<div class="insideForm">
+					<button type="submit" name="action" value="sort">Sort</button>
+					<button type="submit" name="action" value="clearSort">Clear
+						sort</button>
+				</div>
+			</form>
+
+			<div  class="twoBlocks" id="table" >
+				<table border="1">
+					<tr>
+						<th>No.</th>
+						<th>Question Title</th>
+					</tr>
+					<tr th:each=" questions,iStat : ${questions}">
+						<td th:utext="${iStat.index+1}">...</td>
+						<td th:utext="${questions.questionTitle}">...</td>
+					</tr>
+				</table>
+				<div th:inline="text">[[${message}]]</div>
+			</div>
+		</div>
+
+		<div>
+			<div class="Button">
+				<br/> <a th:href="@{/questionmanager(userID=${userID})}"><button
+					type="submit">Back</button></a>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+</html>

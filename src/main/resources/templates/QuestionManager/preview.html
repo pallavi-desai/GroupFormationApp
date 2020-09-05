@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="/styles/cssandjs/questionmanager.css">
+</head>
+<body>
+	<div class="main">
+		<div class="nav-bar">
+			<ul>
+				<li><a href="">Welcome</a></li>
+				<li><a href="">Question Editor</a></li>
+				<li><a href="">Answer Editor</a></li>
+				<li><a href="">Finish</a></li>
+			</ul>
+		</div>
+		<div class="welcome">
+			<h1>Preview Displayed here</h1>
+		</div>
+		<div>
+
+			<div class="Button">
+				<br /> <a th:href="@{/finish}"><button type="submit">Save
+						and Finish</button></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

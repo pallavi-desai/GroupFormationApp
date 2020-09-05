@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>./applicationLogs.log</file>
+        <append>true</append>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36}.%M\(%line\) - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="Console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36}.%M\(%line\) - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="Console" />
+    </root>
+
+</configuration>

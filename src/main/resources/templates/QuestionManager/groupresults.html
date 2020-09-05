@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Group results</title>
+</head>
+<body>
+	<table style="border: 1px solid black;
+    margin: 1%;
+    width: 35%;" th:each="group : ${groupresult}">
+		<tr>
+			<td><p th:text="'Group '+ ${group.groupNumber}"></p></td>
+		</tr>
+		<tr>
+    			<th>BannerID</th>
+    			<th>Last Name</th>
+    			<th>First Name</th>
+    			<th>Responses</th>
+  			</tr>
+			<tr th:each="groupmember : ${group.getGroupMembers()}">
+				<td><p th:text="${groupmember.bannerID}"></p>
+				</td>
+				<td><p th:text="${groupmember.lastName}"></p>
+				</td>
+				<td><p th:text="${groupmember.firstName}"></p>
+				</td>
+				<td th:each="memberresponse : ${groupmember.getResponses()}">
+				<p th:text="${memberresponse}"></p>
+				</td>
+				</tr>
+	</table>
+</body>
+</html>

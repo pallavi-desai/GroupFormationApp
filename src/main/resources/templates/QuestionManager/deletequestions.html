@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Delete Questions</title>
+
+<style>
+.main {
+	position: relative;
+	height: fit-content;
+	width: 100%;
+}
+
+.upperTag {
+	position: relative;
+	text-align: center;
+	margin: auto;
+}
+
+h1 {
+	font-family: cursive;
+	font-size: larger;
+}
+
+.listQue {
+	text-align: center;
+	margin: auto;
+	width: fit-content;
+}
+
+ul {
+	text-align: left;
+	padding: 0px;
+	text-decoration: none;
+	list-style-type: none;
+}
+
+Button {
+	padding: 14px;
+	border: 1px solid black;
+	font-family: cursive;
+	background: #8cffe0;
+	color: black;
+	font-size: medium;
+	margin: auto;
+}
+
+li {
+	font-size: medium;
+	font-family: cursive;
+}
+
+.formbelow {
+	display: inline;
+}
+</style>
+</head>
+<body>
+
+	<div class="main">
+		<div class="upperTag">
+			<h1>Delete Questions Page</h1>
+		</div>
+		<div class="listQue">
+			<div th:if="${flag}">
+				<form th:action="@{/checkResponse(userID=${userID})}"
+					th:object="${deleteQuestions}" method="post">
+					<ul>
+						<li th:each="item : *{listQuestions}"><input type="checkbox"
+							th:field="*{selectedQuestions}" th:value="${item}" /> <label
+							th:for="*{selectedQuestions}" th:text="${item}"></label></li>
+					</ul>
+					<div class="Button">
+						<button type="submit">Delete</button>
+					</div>
+				</form>
+			</div>
+
+			<div th:if="${message== 'Successfully deleted'}">
+				<p th:text="${message}"></p>
+				<div class="Button">
+					<br /> <a th:href="@{/questionmanager(userID=${userID})}"><button
+							type="submit">Go To Questions Manager Page</button></a>
+				</div>
+			</div>
+
+			<div th:if="${message== 'Could not delete!'}">
+				<p th:text="${message}"></p>
+			</div>
+			<div th:if="${message== 'prompt'}">
+				<form th:action="@{/deletequestions}" class="formbelow">
+					<p>Some of the questions have recorded responses,do you still
+						want to delete them?</p>
+					<div class="formbelow">
+						<input type="hidden" th:value="${userID}" name="userID"> <br />
+						<button type="submit">Yes</button>
+					</div>
+					<input type="hidden" th:value="${selectedQue}" name="selectedQue">
+				</form>
+				<div class="formbelow">
+					<br /> <a th:href="@{/questionmanager(userID=${userID})}"><button
+							type="submit">No</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

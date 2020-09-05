@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Question Editor</title>
+<link rel="stylesheet" type="text/css"
+	href="/styles/cssandjs/questionmanager.css">
+</head>
+<body>
+	<div class="main">
+		<div class="nav-bar">
+			<ul>
+				<li><a href="">Welcome</a></li>
+				<li><a href="" style="background: #888888; color: black">Question
+						Editor</a></li>
+				<li><a href="">Answer Editor</a></li>
+				<li><a href="">Finish</a></li>
+			</ul>
+		</div>
+
+		<div class="welcome">
+			<h1>Questionnaire section</h1>
+		</div>
+
+		<div>
+			<form th:action="@{/answereditor}" th:object="${questionModel}"
+				method="post">
+				Title:<input th:field="*{questionTitle}" type="text"
+					name="question_title" required /> QuestionText:<input
+					th:field="*{questionText}" type="text" name="question_title"
+					required /> <label>Choose question type:</label> <select
+					th:field="*{typeSelect}">
+					<option th:each="que : ${questionModel.questionTypeList}"
+						th:value="${que.key}" th:text="${que.value}"></option>
+				</select>
+				<div>
+					<div class="Button">
+						<a th:href="@{/answereditor}"><button type="submit">Next
+								>></button></a>
+					</div>
+				</div>
+			</form>
+</body>
+</html>

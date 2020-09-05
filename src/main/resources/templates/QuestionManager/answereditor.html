@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<link rel="stylesheet" type="text/css"
+	href="/styles/cssandjs/questionmanager.css">
+<script th:inline="javascript">
+	function addComponents() {
+		var container = document.getElementById("container");
+		var displaytxtlbl = document.createElement("label");
+		displaytxtlbl.innerHTML = "Display Text:";
+		container.appendChild(displaytxtlbl);
+
+		var dispalytxt = document.createElement("input");
+		dispalytxt.type = "text";
+		dispalytxt.name = "response_txt";
+		container.appendChild(dispalytxt);
+
+		var tabspace = document.createElement("label");
+		tabspace.innerHTML = "&nbsp &nbsp";
+		container.appendChild(tabspace);
+
+		var storedlbl = document.createElement("label");
+		storedlbl.innerHTML = "Stored as:";
+		container.appendChild(storedlbl);
+
+		var stored_value = document.createElement("input");
+		stored_value.type = "text";
+		stored_value.name = "score_txt";
+		container.appendChild(stored_value);
+		container.appendChild(document.createElement("br"));
+	}
+</script>
+</head>
+<body>
+
+	<div class="main">
+		<div class="nav-bar">
+			<ul>
+				<li><a href="">Welcome</a></li>
+				<li><a href="">Question Editor</a></li>
+				<li><a href="" style="background: #888888; color: black">Answer
+						Editor</a></li>
+				<li><a href="">Finish</a></li>
+			</ul>
+		</div>
+		<div>
+			<div class="Button">
+				<form th:action="@{/finish}" method="post">
+					<div id="container" th:if="${question_type}">
+						Display text:<input type="text" id="response_txt"
+							name="response_txt">&nbsp Stored as:<input type="text"
+							id="score_txt" name="score_txt" /></br> Display text:<input
+							type="text" id="response_txt" name="response_txt">&nbsp
+						Stored as:<input type="text" id="score_txt" name="score_txt" /></br>
+					</div>
+					<div></div>
+					<div></div>
+					<button type="submit">Next >></button>
+				</form>
+				<button onClick="addComponents()">More Answers</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
